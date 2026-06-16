@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: biblioteca_php
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: biblioteca_mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: biblioteca
+      MYSQL_USER: user_biblioteca
+      MYSQL_PASSWORD: password123
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
